@@ -1,0 +1,145 @@
+<ion-view>
+    <ion-content class="padding">
+    <div id="all">
+        <div id="content">
+            <div class="container" ng-repeat="order in orderDetailData">
+
+                <div class="col-md-12">
+
+                    <ul class="breadcrumb">
+                        <li><a href="index.html">Home</a>
+                        </li>
+                        <li><a href="#">My orders</a>
+                        </li>
+                        <li>Order #{{order.order_number}}</li>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-3">
+                    <!-- *** CUSTOMER MENU ***
+ _________________________________________________________ -->
+                    <div class="panel panel-default sidebar-menu">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Customer section</h3>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="active">
+                                    <a href="#/tab/orders"><i class="fa fa-list"></i> My orders</a>
+                                </li>
+                                <li>
+                                    <a href="customer-wishlist.html"><i class="fa fa-heart"></i> My wishlist</a>
+                                </li>
+                                <li>
+                                    <a href="customer-account.html"><i class="fa fa-user"></i> My account</a>
+                                </li>
+                                <li>
+                                    <a href="index.html"><i class="fa fa-sign-out"></i> Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <!-- *** CUSTOMER MENU END *** -->
+                </div>
+
+                <div class="col-md-9" id="customer-order">
+                    <div class="box">
+                        <h1>Order #{{order.order_number}}</h1>
+
+                        <p class="lead">Order #{{order.order_number}} was placed on <strong>{{order.created_at | date:'dd/MM/yy'}}</strong> and is currently <strong>Being prepared</strong>.</p>
+                        <p class="text-muted">If you have any questions, please feel free to <a href="contact.html">contact us</a>, our customer service center is working for you 24/7.</p>
+
+                        <hr>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Unit price</th>
+                                        <th>Discount</th>
+                                        <th colspan="2">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in order.line_items">
+                                        <!--<td>
+                                            <a href="#">
+                                                <img src="img/detailsquare.jpg" alt="White Blouse Armani">
+                                            </a>
+                                        </td>-->
+                                        <td><a href="#">{{item.title}}</a>
+                                        </td>
+                                        <td>{{item.quantity}}</td>
+                                        <td>${{item.price}}</td>
+                                        <td>${{item.total_discount}}</td>
+                                        <td colspan="2"> ${{item.price}}</td>
+                                    </tr>
+                                   
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Order subtotal</th>
+                                        <th>${{order.subtotal_price}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Shipping and handling</th>
+                                        <th>$0.00</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Tax</th>
+                                        <th>${{order.total_tax}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5" class="text-right">Total</th>
+                                        <th>${{order.total_price}}</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                        <!-- /.table-responsive -->
+
+                        <div class="row addresses">
+                            <div class="col-md-6">
+                                <h2>Invoice address</h2>
+                                <p>{{order.billing_address.name}} 
+                                    <br>{{order.billing_address.address1}}
+                                    <span ng-show="order.billing_address.address2 != null"> <br>{{order.billing_address.address2}}</span>
+                                    <br>{{order.billing_address.city}}
+                                    <br>{{order.billing_address.country}}
+                                    <br>{{order.billing_address.zip}}
+                                    </br> Phone : {{order.billing_address.phone}}
+                                    </p>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <h2>Shipping address</h2>
+                                <p>{{order.shipping_address.name}} 
+                                    <br>{{order.shipping_address.address1}}
+                                    <span ng-show="order.shipping_address.address2 != null"> <br>{{order.shipping_address.address2}}</span>
+                                    <br>{{order.shipping_address.city}}
+                                    <br>{{order.shipping_address.country}}
+                                    <br>{{order.shipping_address.zip}}
+                                    </br> Phone : {{order.shipping_address.phone}}
+                                    </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+    </div>
+    <!-- /#all -->
+    </ion-content>
+</ion-view>

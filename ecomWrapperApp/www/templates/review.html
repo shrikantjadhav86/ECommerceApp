@@ -1,0 +1,136 @@
+<ion-view>
+    <ion-content class="padding">
+        <div id="all">
+
+            <div id="content">
+                <div class="container">
+
+                    <!--<div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li><a href="#">Home</a>
+                            </li>
+                            <li>Checkout - Order review</li>
+                        </ul>
+                    </div>-->
+
+                    <div class="col-md-9" id="checkout">
+
+                        <div class="box">
+                            <form method="post" action="checkout4.html">
+                                <h1>Checkout - Order review</h1>
+                                <ul class="nav nav-pills nav-justified">
+                                    <li><a href="#/tab/checkout"><i class="fa fa-map-marker"></i><br>Address</a>
+                                    </li>                                   
+                                    <li class="active"><a href="#/tab/review"><i class="fa fa-eye"></i><br>Order Review</a>
+                                    </li>
+                                </ul>
+
+                                <div class="content">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2">Product</th>
+                                                    <th>Quantity</th>
+                                                    <th>Unit price</th>
+                                                    <th>Discount</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="val in cart_product track by $index">
+                                                    <td>
+                                                        <a href="#">
+                                                            <img src="{{val.image.src}}" alt="{{val.title}}">
+                                                        </a>
+                                                    </td>
+                                                    <td><a href="#">{{val.title}}</a>
+                                                    </td>
+                                                    <td>{{val.quantity}}</td>
+                                                    <td>${{val.variants.price}}</td>
+                                                    <td>
+                                                        <span ng-show ="val.variants.compare_at_price != null">
+                                                       {{ (val.variants.compare_at_price|number) - (val.variants.price|number) |currency }}
+                                                        </span>
+                                                        <span ng-show ="val.variants.compare_at_price == null">
+                                                            $0.00
+                                                        </span>  
+                                                    </td>
+                                                    <td>{{(val.variants.price|number) * (val.quantity|number) |currency}} </td>
+                                                </tr>                                                
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="5">Total</th>
+                                                    <th>{{ grandTotal |currency}}</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.content -->
+
+                                <div class="box-footer">
+                                    <div class="pull-left">
+                                        <a href="#/tab/checkout" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to Payment method</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a class="btn btn-primary"  href="#/tab/payment" >Place an order<i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /.box -->
+
+
+                    </div>
+                    <!-- /.col-md-9 -->
+
+                    <div class="col-md-3">
+
+                        <div class="box" id="order-summary">
+                            <div class="box-header">
+                                <h3>Order summary</h3>
+                            </div>
+                            <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td>Order subtotal</td>
+                                            <th>{{ grandTotal |currency}}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Shipping and handling</td>
+                                            <th>$0.00</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Tax</td>
+                                            <th>$0.00</th>
+                                        </tr>
+                                        <tr class="total">
+                                            <td>Total</td>
+                                            <th>{{ grandTotal |currency}}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                </div>
+                <!-- /.container -->
+            </div>
+            <!-- /#content -->
+        </div>
+        <!-- /#all -->
+
+     </ion-content>
+</ion-view>

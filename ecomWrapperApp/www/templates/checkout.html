@@ -1,0 +1,171 @@
+<ion-view>
+    <ion-content class="padding">
+    <div id="all">
+
+        <div id="content">
+            <div class="container">
+
+               <!-- <div class="col-md-12">
+                    <ul class="breadcrumb">
+                        <li><a href="#">Home</a>
+                        </li>
+                        <li>Checkout - Address</li>
+                    </ul>
+                </div>-->
+
+                <div class="col-md-9" id="checkout">
+
+                    <div class="box">
+                        <form  name="userForm" method="POST" ng-submit="submitForm()">
+                            <div ng-show="verify.message != null" class="label label-danger">
+                                <span class="">{{verify.message}}</span>
+                            </div>    
+                            <h1>Checkout</h1>
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="active">
+                                    <a href="#"><i class="fa fa-map-marker"></i><br>Address</a>
+                                </li>                                                              
+                                <li class="disabled">
+                                    <a href="#"><i class="fa fa-eye"></i><br>Order Review</a>
+                                </li>
+                            </ul>
+
+                            <div class="content">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="first_name">First Name</label>
+                                            <input type="text" class="form-control" id="first_name" ng-model="user.first_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="last_name">Last Name</label>
+                                            <input type="text" class="form-control" id="last_name" ng-model="user.last_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="company">Company</label>
+                                            <input type="text" class="form-control" id="company" ng-model="user.company">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="street">Street</label>
+                                            <input type="text" class="form-control" id="street" ng-model="user.street">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+
+                                <div class="row">
+                                    
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="zip">ZIP</label>
+                                            <input type="text" class="form-control" id="zip" ng-model="user.zip">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="city">CITY</label>
+                                            <input type="text" class="form-control" id="city" ng-model="user.city">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="state">State</label>
+                                            <input type="text" class="form-control" id="state" ng-model="user.state">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3">
+                                        <div class="form-group">
+                                            <label for="country">Country</label>
+                                            <input type="text" class="form-control" id="country" ng-model="user.country" readonly="true">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="phone">Telephone</label>
+                                            <input type="text" class="form-control" id="phone" ng-model="user.phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="text" class="form-control" id="email" ng-model="user.email">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.row -->
+                            </div>
+
+                            <div class="box-footer">
+                                <div class="pull-left">
+                                    <a href="#/tab/cart" class="btn btn-default"><i class="fa fa-chevron-left"></i>Back to basket</a>
+                                </div>
+                                <div class="pull-right">
+                                    <button type="submit"  class="btn btn-primary">Continue to Delivery Method<i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box -->
+
+
+                </div>
+                <!-- /.col-md-9 -->
+
+                <div class="col-md-3">
+
+                    <div class="box" id="order-summary">
+                        <div class="box-header">
+                            <h3>Order summary</h3>
+                        </div>
+                        <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td>Order subtotal</td>
+                                        <th>{{ grandTotal |currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Shipping and handling</td>
+                                        <th>$0.00</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax</td>
+                                        <th>$0.00</th>
+                                    </tr>
+                                    <tr class="total">
+                                        <td>Total</td>
+                                        <th>{{ grandTotal |currency}}</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-3 -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#content -->
+
+    </div>
+    <!-- /#all -->
+     </ion-content>
+</ion-view>
