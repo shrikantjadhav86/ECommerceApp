@@ -44,4 +44,7 @@ Route::get('/api/v1/order/{order_id}', 'ProductController@getSingleOrders');
 Route::post('/api/v1/cardPayment', 'ProductController@cardPay');
 Route::post('/api/v1/paypalPayment', 'ProductController@paypalPayment');
 Route::post('/api/v1/address_validate', 'ProductController@address_validate');
-Route::post('/api/v1/register', 'ProductController@registration');
+Route::post('/api/v1/user/register', 'ProductController@registration');
+Route::get('/api/v1/userOrder/{id}', 'ProductController@userOrder');
+
+

@@ -10,14 +10,82 @@ class ShopifyClient {
  	public $shop_domain = 'teststoredomain.myshopify.com';
     private $api_key = 'a374024b6ccf1836a0943b25f81dde32';
     private $password = '20ff272e7b82fc83e71e0d54b1c7fbfd';*/
-	public $shop_domain = 'healthspan-2.myshopify.com';
-    private $api_key = '289c8c53a952805cb65cbf580e93d134';
-    private $password = '3e49c812b1303b64f7f6b0c3dbc79da0';
+	
+		
+	public $shop_domain;
+    private $api_key;
+    private $password;
 	
     private $token;
     private $secret = '';
     private $last_response_headers = null;
-
+	
+	/**
+     * to get domain name of store
+     *@returns  $domain
+     * 
+     */
+	public function __getDomain($domain) {
+      	return $domain;
+  	}
+		
+	/**
+     * to get key of store
+     *@returns  $key
+     * 
+     */
+	public function __getKey($key) {
+      	 if (property_exists($this, $key)) {
+      		return $this->$key;
+    	}
+  	}	
+	
+	/**
+     * to get password of store
+     *@returns  $password
+     * 
+     */
+	public function __getPassword($password) {
+      	 if (property_exists($this, $password)) {
+      		return $this->$password;
+    	}
+  	}
+	
+	
+	/**
+     * to set domain of store
+     *@params  $domain
+     * 
+     */
+	public function __setDomain($arr,$domain) {		
+		 $this->shop_domain = $domain;
+  	}
+	
+	
+	/**
+     * to set key of store
+     *@params  $key
+     * 
+     */
+	public function __setKey($arr,$key) {
+		 $this->api_key = $key;
+  	}
+	
+	
+	/**
+     * to set password of store
+     *@params  $password
+     * 
+     */
+	public function __setPassword($arr,$password) {
+		 $this->password = $password;
+  	}
+	
+	
+	/**
+     * to set store variables
+	 *@params $shop_domain, $token, $api_key, $password
+     */
     public function init($shop_domain, $token, $api_key, $password) {
             $this->name = "ShopifyClient";
             $this->shop_domain = $shop_domain;
@@ -26,6 +94,11 @@ class ShopifyClient {
             $this->password = $password;
     }
     
+	/**
+     * to call shopify api
+	 *@params $methods and $path
+	 *@returns $response from shopify
+     */
     public function call($method, $path, $params=array())
     {
         $baseurl = "https://{$this->api_key}:{$this->password}@{$this->shop_domain}/";
@@ -49,6 +122,12 @@ class ShopifyClient {
         return (is_array($response) and (count($response) > 0)) ? array_shift($response) : $response;
     }
     
+	
+	/**
+     * to get response from shopify via curl
+	 *
+	 *@returns curl response
+     */
     private function curlHttpApiRequest($method, $url, $query='', $payload='', $request_headers=array())
     {
         $url = $this->curlAppendQuery($url, $query);
@@ -66,13 +145,24 @@ class ShopifyClient {
         return $message_body;
     }
     
+	
+	/**
+     * to append curl query
+	 *
+	 *@returns query response
+     */
     private function curlAppendQuery($url, $query)
     {
         if (empty($query)) return $url;
         if (is_array($query)) return "$url?".http_build_query($query);
         else return "$url?$query";
     }
-
+	
+	/**
+     * to set curl options
+	 *
+	 *
+     */
     private function curlSetopts($ch, $method, $payload, $request_headers)
     {
         curl_setopt($ch, CURLOPT_HEADER, true);
@@ -94,7 +184,11 @@ class ShopifyClient {
                 curl_setopt ($ch, CURLOPT_POSTFIELDS, $payload);
         }
     }
-    
+    /**
+     * to set curl header
+	 *
+	 *@returns header response
+     */
     private function curlParseHeaders($message_headers)
     {
         $header_lines = preg_split("/\r\n|\n|\r/", $message_headers);
@@ -110,7 +204,13 @@ class ShopifyClient {
         return $headers;
     }
 }
+
 class ShopifyCurlException extends Exception { }
+	/**
+     * if shoipfy respond exception response
+	 *
+	 *@returns exception response
+     */
 class ShopifyApiException extends Exception
 {
 	protected $method;

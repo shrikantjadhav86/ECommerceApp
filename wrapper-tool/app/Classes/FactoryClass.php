@@ -4,20 +4,24 @@ namespace App\Classes;
 class FactoryClass {
 
 	 /**
-     * Display a listing of the resource.
+     * Create object of class
      *
-     * @return \Illuminate\Http\Response
+     * @return $obj (class)
      */
 	
     public function getInstance($instance)
     {
-        if($instance == 1) {
+	
+		//it define class path to create its object
+		$className = 'App\\Classes\\' . $instance;
+		$obj =  new $className;	
+       /* if($instance == 1) {
 		 	//get shopify object
 			$obj = new ShopifyWrapper();
 		}elseif($instance == 2) {
 			//get other ecommerce object
 			$obj = new EcommerceWrapper();			
-		}
+		}*/
 		return $obj;
     }
 }

@@ -2,9 +2,14 @@
 
 namespace App\Classes;
 
+
+/**
+     * this is interface of class shopifywrapper and other ecommerce wrapper 
+	 *
+     */
 interface EcommerceInterface {
-	
 	public function setConfig($config);
+	public function setStore($store);
 	public function getProducts();
 	public function getProductDetails();
 	public function getCustomers();
@@ -17,8 +22,7 @@ interface EcommerceInterface {
 	public function createOrders($json);
 	public function getSingleOrders();
 	public function register($json);
-	
-	
+	public function userOrder($id);	
 }
 
 

@@ -6,6 +6,9 @@ use App\Classes\Paypal;
 use Session;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
+use DB;
+
+/*Header to remove crossed browser error in console or http call from angularjs */
 
 header('Access-Control-Allow-Headers: Content-Type, x-xsrf-token');
 header('Access-Control-Allow-Origin: *');
@@ -18,18 +21,18 @@ class ProductController extends Controller
 	public $interfaceobj; 
 	public  $paypal;
 	/**
-	 * get object instance.
-	 *
-	 * @return void
-	 */
+		It use to get object instance and store info from database
+		@return set store info for shopifyclient and return instance of wrapper
+	**/	
 	
 	public function __construct()
 	{
-		$this->eCommerce = 1;
+		 $store = DB::table('store')
+			->where('token',Request::get('token'))
+			->first();
 		$factory = new FactoryClass();
-		//$paypal = new Paypal();
-		//$this->paypal = $paypal;
-		$this->interfaceobj = $factory->getInstance($this->eCommerce);
+		$this->interfaceobj = $factory->getInstance($store->type);
+		$this->interfaceobj->setStore($store);
 	}
 	
 	/**
@@ -45,11 +48,12 @@ class ProductController extends Controller
 	/**
      *customer registration
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $json(user info array)
      * @return \Illuminate\Http\Response
      */
 	public function registration()
 	{		
+		$arr = array();
 		$request = Request::instance();
 	 	$content = $request->getContent();
 		$json = json_decode($content, true);
@@ -58,17 +62,37 @@ class ProductController extends Controller
 	}
 	
 	
-	
 	/**
-     *add to cart products
+     *to get user orders
      *
      * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+	public function userOrder($id)
+	{
+		$userOrder = $this->interfaceobj->userOrder($id);
+		return $userOrder;
+	}	
+
+	/**
+     *add to cart products (currently this function ia not in use)
+     *
+     * @param  $cart_product_id 
      * @return \Illuminate\Http\Response
      */
 	public function addToCartProducts($cart_product_id)
 	{		
 		return view('add-cart')->with('id', $cart_product_id);
 	}
+	
+	
+	
+	/**
+     *to get cart products (currently this function ia not in use)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 	public function cartProducts(Request $request)
 	{
 		$cart_id = array();
@@ -86,6 +110,13 @@ class ProductController extends Controller
 		return $cart_products;
 	}
 	
+	
+	/**
+     *to remove cart products (currently this function ia not in use)
+     *
+     * @param  $cart_product_id
+     * @return \Illuminate\Http\Response
+     */
 	public function cartRemoveProducts($line)
 	{
 		$key = $line-1;
@@ -102,7 +133,7 @@ class ProductController extends Controller
     /**
      * get all products
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request ($milit, $page)
      * @return \Illuminate\Http\Response
      */
     public function getAllProducts()
@@ -118,7 +149,6 @@ class ProductController extends Controller
 		}
 		$this->interfaceobj->setConfig($config);
 		$products = $this->interfaceobj->getProducts($limit,$page);
-		
 		return $products;
     }
 
@@ -180,9 +210,9 @@ class ProductController extends Controller
     }
 	
 	/**
-     * get all product from collection_id
+     * get all product from $collection_id
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request, $collection_id
      * @return \Illuminate\Http\Response
      */
     public function getCollectionProducts($collection_id)
@@ -219,6 +249,7 @@ class ProductController extends Controller
 		return $checkout;
 		
     }
+	
 	/**
      * get order products
      *
@@ -232,7 +263,7 @@ class ProductController extends Controller
 	}
 	
 	/**
-     * post order 
+     * create order 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -242,8 +273,9 @@ class ProductController extends Controller
 		$request = Request::instance();
 	 	$content = $request->getContent();
 		$json = json_decode($content, true);
+		
 		$order = $this->interfaceobj->createOrders($json);		
-		return response()->json($order); exit;
+		return $order;
 		
 	}
 	
@@ -251,7 +283,7 @@ class ProductController extends Controller
 	/**
      * get single order 
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $order_id
      * @return \Illuminate\Http\Response
      */
 	public function getSingleOrders($order_id)
@@ -265,9 +297,9 @@ class ProductController extends Controller
 	
 	
 	/**
-     * get order products
+     * get shipped products
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \I$order_id
      * @return \Illuminate\Http\Response
      */
 	public function getAllShippedProducts($order_id)
@@ -278,10 +310,8 @@ class ProductController extends Controller
 		return $orders;
 	}
 
-	
-
 	/**
-     * paypal payment gateway
+     * paypal payment gateway (currently all paypal functions are not in use)
      *
      * 
      * 
@@ -321,8 +351,12 @@ class ProductController extends Controller
             echo "else";
         }
 	}
-
-	// Make tpaypal transaction, if recurring order then store paypal customer profile id .
+	/**
+     * paypal payment gateway (currently all paypal functions are not in use)
+     *Make tpaypal transaction, if recurring order then store paypal customer profile id .
+     * 
+     * 
+     */
     public function confirm_paypal()
     {
         if (!Session::has('token')) {
@@ -398,21 +432,29 @@ class ProductController extends Controller
              redirect()->intended(base_url());
         }
     }
-   
-    // redirect user to payment page with cancle message.
+	
+   	/**
+     * paypal payment gateway (currently all paypal functions are not in use)
+     *
+     * redirect user to payment page with cancle message.
+     * 
+     */
     public function cancel_paypal()
     {
 		Request::session()->put('paypal_error', 'Payment canceled by customer.');
         redirect()->intended(base_url());
     }
 	
-	
-	//authorized payment gateway
+	/**
+     * authorized  payment gateway (currently not in use)
+     *
+     * 
+     */
 	public function authorizedPayment(Request $request)
 	{
-			$request = Request::instance();
-		 	$content = $request->getContent();
-			$json = json_decode($content);
+		$request = Request::instance();
+		$content = $request->getContent();
+		$json = json_decode($content);
 	
 		$data = array();
 			
@@ -423,8 +465,7 @@ class ProductController extends Controller
 
         // If is post request then make payment and proced.
         if ($json->cardnumber) 
-        {
-				
+        {				
             if (!$json->expired_year) 
             {
                 $year = date('Y');
@@ -638,7 +679,12 @@ class ProductController extends Controller
         }	
 	}
 	
-	//to verify address by google api
+	
+	/**
+     * to verify address by google api
+     *@params $request and $json(array of all address details)
+     * 
+     */
 	public function address_validate(Request $request)
     {		
 		$request = Request::instance();
@@ -738,7 +784,11 @@ class ProductController extends Controller
         }
     }
 	
-	
+	/**
+     * authorize.net payment gateway 
+     *@params $request and $json(array of card details)
+     * 
+     */
 	public function cardPay()
 	{
 		$request = Request::instance();
