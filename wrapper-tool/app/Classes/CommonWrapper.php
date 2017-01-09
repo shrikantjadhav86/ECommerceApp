@@ -20,16 +20,16 @@ abstract class CommonWrapper {
 	*
 	*@return \Illuminate\Http\Response
 	**/
-	public function createProductArray($val,$shopifykeyarr,$keyarr)
+	public function createProductArray($val,$shopifyKeyArr,$keyArr)
 	{		
-		for($i=0;$i < count($keyarr); $i++){
-			if(is_array($keyarr[$i])) {
-				$vararray = $keyarr[$i]['variants'];				
-				for($j=0;$j < count($vararray); $j++){
-					$arr['variants'][$vararray[$j]] = $val['variants'][0][$vararray[$j]];			
+		for($i=0;$i < count($keyArr); $i++){
+			if(is_array($keyArr[$i])) {
+				$varArray = $keyArr[$i]['variants'];				
+				for($j=0;$j < count($varArray); $j++){
+					$arr['variants'][$varArray[$j]] = $val['variants'][0][$varArray[$j]];			
 				}	
 			}else {
-				$arr[$keyarr[$i]] = $val[$shopifykeyarr[$i]];				
+				$arr[$keyArr[$i]] = $val[$shopifyKeyArr[$i]];				
 			}	
 			
 		}	
@@ -135,23 +135,19 @@ abstract class CommonWrapper {
 		if($response_array[0]== 2||$response_array[0]== 3)
 		{
 			//success
-			$payres =  'Payment Failure! ';
-			$payres .= $response_array[3];
-			return $payres;
+			$payRes =  'Payment Failure! ';
+			$payRes .= $response_array[3];
+			return $payRes;
 		}
 		else
 		{
 			$ptid = $response_array[6];
 			$ptidmd5 = $response_array[7];
-			$payres = "success";
-			return $payres;
+			$payRes = "success";
+			return $payRes;
 		}
 	}
-		
-	
-	
-	
-	
+
 }
 
 

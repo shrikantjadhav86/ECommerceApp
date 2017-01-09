@@ -18,7 +18,7 @@ header('Content-Type: application/json');
 class ProductController extends Controller
 {
     public $eCommerce;
-	public $interfaceobj; 
+	public $interfaceObj; 
 	public  $paypal;
 	/**
 		It use to get object instance and store info from database
@@ -31,8 +31,8 @@ class ProductController extends Controller
 			->where('token',Request::get('token'))
 			->first();
 		$factory = new FactoryClass();
-		$this->interfaceobj = $factory->getInstance($store->type);
-		$this->interfaceobj->setStore($store);
+		$this->interfaceObj = $factory->getInstance($store->type);
+		$this->interfaceObj->setStore($store);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class ProductController extends Controller
 		$request = Request::instance();
 	 	$content = $request->getContent();
 		$json = json_decode($content, true);
-		$user = $this->interfaceobj->register($json);		
+		$user = $this->interfaceObj->register($json);		
 		return $user;
 	}
 	
@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
 	public function userOrder($id)
 	{
-		$userOrder = $this->interfaceobj->userOrder($id);
+		$userOrder = $this->interfaceObj->userOrder($id);
 		return $userOrder;
 	}	
 
@@ -105,8 +105,8 @@ class ProductController extends Controller
 		//print_r(Session::all()); exit;
 		
 		$config['cart_id'] = $cart_id;
-		$this->interfaceobj->setConfig($config);
-		$cart_products = $this->interfaceobj->getCartProduct();
+		$this->interfaceObj->setConfig($config);
+		$cart_products = $this->interfaceObj->getCartProduct();
 		return $cart_products;
 	}
 	
@@ -147,8 +147,8 @@ class ProductController extends Controller
 			$config['limit'] = 50;
 			$config['page'] = 1;
 		}
-		$this->interfaceobj->setConfig($config);
-		$products = $this->interfaceobj->getProducts($limit,$page);
+		$this->interfaceObj->setConfig($config);
+		$products = $this->interfaceObj->getProducts($limit,$page);
 		return $products;
     }
 
@@ -161,8 +161,8 @@ class ProductController extends Controller
     public function showDetails($id)
     {
 		$config['id'] = $id;			
-		$this->interfaceobj->setConfig($config);
-		$productDetails = $this->interfaceobj->getProductDetails();
+		$this->interfaceObj->setConfig($config);
+		$productDetails = $this->interfaceObj->getProductDetails();
 		return $productDetails;
     }
 	
@@ -182,8 +182,8 @@ class ProductController extends Controller
 			$config['page'] = 1;
 		}
 		
-		$this->interfaceobj->setConfig($config);
-		$customers = $this->interfaceobj->getCustomers();
+		$this->interfaceObj->setConfig($config);
+		$customers = $this->interfaceObj->getCustomers();
 		return $customers;		
     }
 	
@@ -204,8 +204,8 @@ class ProductController extends Controller
 			$config['page'] = 1;
 		}
 		
-		$this->interfaceobj->setConfig($config);
-		$collections = $this->interfaceobj->getCollections();
+		$this->interfaceObj->setConfig($config);
+		$collections = $this->interfaceObj->getCollections();
 		return $collections;		
     }
 	
@@ -218,8 +218,8 @@ class ProductController extends Controller
     public function getCollectionProducts($collection_id)
     {
 		$config['collection_id'] = $collection_id;
-		$this->interfaceobj->setConfig($config);
-		$collection_products = $this->interfaceobj->getCollectionProducts();
+		$this->interfaceObj->setConfig($config);
+		$collection_products = $this->interfaceObj->getCollectionProducts();
 		return $collection_products;
 		
     }
@@ -232,7 +232,7 @@ class ProductController extends Controller
      */
    public function getAllCartProducts()
     {
-		$cart_products = $this->interfaceobj->getCartProducts();
+		$cart_products = $this->interfaceObj->getCartProducts();
 		return $cart_products;
 		
     }
@@ -245,7 +245,7 @@ class ProductController extends Controller
      */
     public function getCheckout()
     {
-		$checkout = $this->interfaceobj->getCheckout();
+		$checkout = $this->interfaceObj->getCheckout();
 		return $checkout;
 		
     }
@@ -258,7 +258,7 @@ class ProductController extends Controller
      */
 	public function getOrder()
 	{
-		$orders = $this->interfaceobj->getOrders();
+		$orders = $this->interfaceObj->getOrders();
 		return $orders;
 	}
 	
@@ -274,7 +274,7 @@ class ProductController extends Controller
 	 	$content = $request->getContent();
 		$json = json_decode($content, true);
 		
-		$order = $this->interfaceobj->createOrders($json);		
+		$order = $this->interfaceObj->createOrders($json);		
 		return $order;
 		
 	}
@@ -289,8 +289,8 @@ class ProductController extends Controller
 	public function getSingleOrders($order_id)
     {
 		$config['order_id'] = $order_id;
-		$this->interfaceobj->setConfig($config);
-		$order = $this->interfaceobj->getSingleOrders();
+		$this->interfaceObj->setConfig($config);
+		$order = $this->interfaceObj->getSingleOrders();
 		return $order;
 	}	
 	
@@ -305,8 +305,8 @@ class ProductController extends Controller
 	public function getAllShippedProducts($order_id)
 	{
 		$config['order_id'] = $order_id;
-		$this->interfaceobj->setConfig($config);
-		$orders = $this->interfaceobj->getShippedProducts();
+		$this->interfaceObj->setConfig($config);
+		$orders = $this->interfaceObj->getShippedProducts();
 		return $orders;
 	}
 
@@ -795,7 +795,7 @@ class ProductController extends Controller
 	 	$content = $request->getContent();
 		$json = json_decode($content);
 		
-		$pay = $this->interfaceobj->cardPay($json);
+		$pay = $this->interfaceObj->cardPay($json);
 		if($pay == "success"){
 			return response()->json(["message" => $pay, 'status' => true]);
 		}else {

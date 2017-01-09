@@ -44,13 +44,13 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($products['products']))
 		{
-			$keyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+			$keyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
 							array('variants'=>array('id','price','sku','compare_at_price','weight','weight_unit')));
-			$shopifykeyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+			$shopifyKeyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
 								   array('variants'=>array(0 =>array('id','price','sku','compare_at_price','weight','weight_unit'))));
 			foreach($products as $key=>$var) {
 				foreach($var as $k=>$val) {
-					$arr = $this->createProductArray($val,$shopifykeyarr,$keyarr);
+					$arr = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
 					$arr['product_url'] = 'https://'.$this->domain.'/products/'.$val['handle'];
 					$arra['data'][] = $arr;		
 				}				
@@ -81,18 +81,18 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($product['product']))
 		{
-			$keyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+			$keyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
 							array('variants'=>array('id','price','sku','compare_at_price','weight','weight_unit')));
-			$shopifykeyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+			$shopifyKeyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
 								   array('variants'=>array(0 =>array('id','price','sku','compare_at_price','weight','weight_unit'))));
 			
-			foreach($product as $key=>$val) {				
-				$arr = $this->createProductArray($val,$shopifykeyarr,$keyarr);
+			foreach($product as $key=>$val) {
+				$arr = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
 				$arr['product_url'] = 'https://'.$this->domain.'/products/'.$val['handle'];
 				$arra['data'][] = $arr;
 			}
 			$status_code = 200;
-			$message = 'success';	
+			$message = 'success';
 	}else
 	{	
 		$status_code = 404;
@@ -100,14 +100,13 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra['data'] = array();
 		$arra['data_count'] = 0;
 	}
-		$product = $this->getJsonDataFormat($arra,$status_code,$message);	
+		$product = $this->getJsonDataFormat($arra,$status_code,$message);
 		return $product;
     }
-	
-	
+		
 	
 	/**
-	* Display users or customers of shopify
+	*Display users or customers of shopify
 	*@param  $limit , and $page which set in config array
 	*@return \Illuminate\Http\Response
 	**/
@@ -117,18 +116,18 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($customers['customers']))
 		{
-			$keyarr = array('id','email','accepts_marketing','first_name','last_name','orders_count','state','total_spent','last_order_id','note',
+			$keyArr = array('id','email','accepts_marketing','first_name','last_name','orders_count','state','total_spent','last_order_id','note',
 							'verified_email','multipass_identifier','tax_exempt','tags','last_order_name','addresses');
-			$shopifykeyarr = array('id','email','accepts_marketing','first_name','last_name','orders_count','state','total_spent','last_order_id','note',
+			$shopifyKeyArr = array('id','email','accepts_marketing','first_name','last_name','orders_count','state','total_spent','last_order_id','note',
 							'verified_email','multipass_identifier','tax_exempt','tags','last_order_name','addresses');
 			
 			foreach($customers as $key=>$var) {
 				foreach($var as $k=>$val) {
 					if(!empty($val['default_address'])){
-						array_push($keyarr, 'default_address');
-						array_push($shopifykeyarr, 'default_address');								
+						array_push($keyArr, 'default_address');
+						array_push($shopifyKeyArr, 'default_address');								
 					}					
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);	
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);	
 				}				
 			}
 			$status_code = 200;
@@ -155,12 +154,12 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($collections['smart_collections']))
 		{
-			$keyarr = array('id','handle','title','body_html','published_at','sort_order','template_suffix','published_scope','disjunctive','rules');
-			$shopifykeyarr = array('id','handle','title','body_html','published_at','sort_order','template_suffix','published_scope','disjunctive','rules');
+			$keyArr = array('id','handle','title','body_html','published_at','sort_order','template_suffix','published_scope','disjunctive','rules');
+			$shopifyKeyArr = array('id','handle','title','body_html','published_at','sort_order','template_suffix','published_scope','disjunctive','rules');
 			
 			foreach($collections as $key=>$var) {
 				foreach($var as $k=>$val) {								
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);				
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);				
 				}				
 			}
 			$status_code = 200;
@@ -187,14 +186,14 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($collection_Products['products']))
 		{
-			$keyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images',
+			$keyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images',
 							'image','options',array('variants'=>array('id','price','sku','compare_at_price','weight','weight_unit')));
-			$shopifykeyarr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+			$shopifyKeyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
 								   array('variants'=>array(0 =>array('id','price','sku','compare_at_price','weight','weight_unit'))));
 			
 			foreach($collection_Products as $key=>$var) {
 				foreach($var as $k=>$val) {
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);					
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);					
 				}				
 			}
 			$status_code = 200;
@@ -220,7 +219,7 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$cart_arr = array();		
 		$status_code = '';
 		$message = '';
-		$arrnew = array();
+		$arrNew = array();
 		$cart_id = $this->config['cart_id'];
 		if(!empty($cart_id)){
 		foreach($cart_id as $id) {
@@ -237,13 +236,13 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 			
 				if(!empty($product['product']))
 				{
-					$keyarr = array('id','title','image',array('variants'=>array('id','price','compare_at_price')));
-					$shopifykeyarr = array('id','title','image',array('variants'=>array(0 =>array('id','price','compare_at_price'))));				
+					$keyArr = array('id','title','image',array('variants'=>array('id','price','compare_at_price')));
+					$shopifyKeyArr = array('id','title','image',array('variants'=>array(0 =>array('id','price','compare_at_price'))));				
 				foreach($product as $key=>$val) {
-					$arrnew[] = $this->createProductArray($val,$shopifykeyarr,$keyarr);	
+					$arrNew[] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);	
 					
 				}
-				$arra['data'] = $arrnew;
+				$arra['data'] = $arrNew;
 				$status_code = 200;
 				$message = 'success';
 				}else
@@ -281,18 +280,18 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($order['orders']))
 		{
-			$keyarr = array('id','email','created_at','number','note','token','gateway','total_price',
+			$keyArr = array('id','email','created_at','number','note','token','gateway','total_price',
 							'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed','total_discounts',
 							'total_line_items_price','name','cancelled_at','cancel_reason','total_price_usd','user_id','location_id',
 						   'order_number','discount_codes','payment_gateway_names','processing_method','fulfillment_status','tax_lines','refunds');
-			$shopifykeyarr = array('id','email','created_at','number','note','token','gateway','total_price',
+			$shopifyKeyArr = array('id','email','created_at','number','note','token','gateway','total_price',
 								'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed',
 							  	'total_discounts','total_line_items_price','name','cancelled_at','cancel_reason','total_price_usd','user_id','location_id',
 						   		'order_number','discount_codes','payment_gateway_names','processing_method','fulfillment_status','tax_lines','refunds');
 			
 			foreach($order as $key=>$var) {
 				foreach($var as $k=>$val) {
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
 				}				
 			}
 			$status_code = 200;
@@ -320,12 +319,12 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($order['order']))
 		{
-			$keyarr = array('id','email','created_at','number','note','token','gateway','total_price',
+			$keyArr = array('id','email','created_at','number','note','token','gateway','total_price',
 							'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed','total_discounts',
 							'total_line_items_price','name','cancelled_at','cancel_reason','total_price_usd','user_id','location_id',
 						   'order_number','discount_codes','payment_gateway_names','processing_method','fulfillment_status','tax_lines','refunds',
 							'line_items');
-			$shopifykeyarr = array('id','email','created_at','number','note','token','gateway','total_price',
+			$shopifyKeyArr = array('id','email','created_at','number','note','token','gateway','total_price',
 								'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed',
 							  	'total_discounts','total_line_items_price','name','cancelled_at','cancel_reason','total_price_usd','user_id','location_id',
 						   		'order_number','discount_codes','payment_gateway_names','processing_method','fulfillment_status','tax_lines','refunds',
@@ -333,15 +332,15 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 			
 			foreach($order as $key=>$val) {				
 					if(!empty($val['billing_address'])){
-						array_push($keyarr, 'billing_address');
-						array_push($shopifykeyarr, 'billing_address');						
+						array_push($keyArr, 'billing_address');
+						array_push($shopifyKeyArr, 'billing_address');						
 					}
 					if(!empty($val['shipping_address'])){
-						array_push($keyarr, 'shipping_address');
-						array_push($shopifykeyarr, 'shipping_address');
+						array_push($keyArr, 'shipping_address');
+						array_push($shopifyKeyArr, 'shipping_address');
 					}
 					
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
 			}
 			$status_code = 200;
 			$message = 'success';	
@@ -393,14 +392,14 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$arra = array();
 		if(!empty($shipped_products['fulfillments']))
 		{
-			$keyarr = array('id','order_id','created_at','status','service','tracking_company','shipment_status','tracking_number',
+			$keyArr = array('id','order_id','created_at','status','service','tracking_company','shipment_status','tracking_number',
 							'tracking_url','receipt','line_items');
-			$shopifykeyarr = array('id','order_id','created_at','status','service','tracking_company','shipment_status','tracking_number',
+			$shopifyKeyArr = array('id','order_id','created_at','status','service','tracking_company','shipment_status','tracking_number',
 							'tracking_url','receipt','line_items');
 			
 			foreach($shipped_products as $key=>$var) {
 				foreach($var as $k=>$val) {
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);					
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);					
 				}				
 			}
 			$status_code = 200;
@@ -479,18 +478,19 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 	**/
 	public function userOrder($id)
 	{		
-		$order = $this->ShopifyClient->call('GET','/admin/orders.json?customer_id='.$id);		
+		$order = $this->ShopifyClient->call('GET','/admin/orders.json?customer_id='.$id);
+
 		if(!empty($order['orders']))
 		{
-			$keyarr = array('id','email','created_at','number','note','token','total_price',
+			$keyArr = array('id','email','created_at','number','note','token','total_price',
 							'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed','total_discounts',
 							'total_line_items_price','name','cancelled_at','cancel_reason','order_number','fulfillment_status','line_items');
-			$shopifykeyarr =  array('id','email','created_at','number','note','token','total_price',
+			$shopifyKeyArr =  array('id','email','created_at','number','note','token','total_price',
 							'subtotal_price','total_weight','total_tax','taxes_included','currency','financial_status','confirmed','total_discounts',
 							'total_line_items_price','name','cancelled_at','cancel_reason','order_number','fulfillment_status','line_items');
 			foreach($order as $key=>$var) {
 				foreach($var as $k=>$val) {
-					$arra['data'][] = $this->createProductArray($val,$shopifykeyarr,$keyarr);				
+					$arra['data'][] = $this->createProductArray($val,$shopifyKeyArr,$keyArr);				
 				}				
 			}
 			$status_code = 200;
