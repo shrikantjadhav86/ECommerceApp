@@ -27,7 +27,7 @@ Route::get('/api/v1/clear/cart', function () {
     return view('clear-cart');
 });
 
-
+Route::get('/api/v1/product/ids', 'ProductController@getProductsByIds');
 Route::get('/api/v1/remove/cart/{line}', 'ProductController@cartRemoveProducts');
 Route::get('/api/v1/cart', 'ProductController@cartProducts');
 Route::get('/api/v1/products', 'ProductController@getAllProducts');

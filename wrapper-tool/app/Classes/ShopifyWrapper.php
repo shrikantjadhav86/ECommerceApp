@@ -10,19 +10,18 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 	/**
 		It use to get object instance
 		@return shopify client class object
-	**/	
+	**/
 	public function __construct()
 	{
 	 	$this->ShopifyClient = new ShopifyClient();
 	}
 	public function setStore($store)
-	{		
+	{
 		$arr = array();	
 		$this->domain = $store->domain;
 		$this->ShopifyClient->__setDomain($arr,$store->domain);
 		$this->ShopifyClient->__setKey($arr,$store->key);
-		$this->ShopifyClient->__setPassword($arr,$store->password);
-		
+		$this->ShopifyClient->__setPassword($arr,$store->password);		
 	}
 	
 	/**
@@ -52,13 +51,13 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 				foreach($var as $k=>$val) {
 					$arr = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
 					$arr['product_url'] = 'https://'.$this->domain.'/products/'.$val['handle'];
-					$arra['data'][] = $arr;		
+					$arra['data'][] = $arr;
 				}				
 			}
 			$status_code = 200;
 			$message = 'success';	
 	}else
-	{	
+	{
 		$status_code = 404;
 		$message = 'Products not found';
 		$arra['data'] = array();
@@ -67,6 +66,37 @@ class ShopifyWrapper extends CommonWrapper implements EcommerceInterface  {
 		$products = $this->getJsonDataFormat($arra,$status_code,$message);		
 		return $products;
     }
+	public function getProductsByIds($ids) {
+		$products = $this->ShopifyClient->call('GET','/admin/products.json?ids='.$ids);
+		$arra = array();
+		if(!empty($products['products']))
+		{
+			$keyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+							array('variants'=>array('id','price','sku','compare_at_price','weight','weight_unit')));
+			$shopifyKeyArr = array('id','title','body_html','created_at','vendor','product_type','tags','images','image','options',
+								   array('variants'=>array(0 =>array('id','price','sku','compare_at_price','weight','weight_unit'))));
+			foreach($products as $key=>$var) {
+				foreach($var as $k=>$val) {
+					$arr = $this->createProductArray($val,$shopifyKeyArr,$keyArr);
+					$arr['product_url'] = 'https://'.$this->domain.'/products/'.$val['handle'];
+					$arra['data'][] = $arr;
+				}				
+			}
+			$status_code = 200;
+			$message = 'success';	
+	}else
+	{
+		$status_code = 404;
+		$message = 'Products not found';
+		$arra['data'] = array();
+		$arra['data_count'] = 0; 
+	}
+		$products = $this->getJsonDataFormat($arra,$status_code,$message);		
+		return $products;
+    }	
+	
+	
+	
 
     /**
      * get product details

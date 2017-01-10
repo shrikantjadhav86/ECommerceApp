@@ -22,7 +22,8 @@ interface EcommerceInterface {
 	public function createOrders($json);
 	public function getSingleOrders();
 	public function register($json);
-	public function userOrder($id);	
+	public function userOrder($id);
+	public function getProductsByIds($ids);
 }
 
 

@@ -148,9 +148,24 @@ class ProductController extends Controller
 			$config['page'] = 1;
 		}
 		$this->interfaceObj->setConfig($config);
-		$products = $this->interfaceObj->getProducts($limit,$page);
+		$products = $this->interfaceObj->getProducts();
 		return $products;
     }
+	
+	/**
+     * get products by comma seprated ids
+     *@params $Request(array of ids)
+     * 
+     */
+	public function getProductsByIds()
+	{
+		$ids = Request::get('ids');
+		
+		$products = $this->interfaceObj->getProductsByIds($ids);
+		return $products;
+		
+		
+	}	
 
     /**
      * Display product details
@@ -803,6 +818,7 @@ class ProductController extends Controller
 		}	
 		
 	}	
+	
 	
 	
 	
