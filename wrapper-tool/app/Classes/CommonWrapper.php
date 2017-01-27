@@ -137,14 +137,18 @@ abstract class CommonWrapper {
 			//success
 			$payRes =  'Payment Failure! ';
 			$payRes .= $response_array[3];
-			return $payRes;
+			$payment['message'] = $payRes;
+			$payment['transaction_id'] = null;
+			return $payment;
 		}
 		else
 		{
-			$ptid = $response_array[6];
+			$transaction_id = $response_array[6];
 			$ptidmd5 = $response_array[7];
 			$payRes = "success";
-			return $payRes;
+			$payment['message'] = $payRes;
+			$payment['transaction_id'] = $transaction_id;
+			return $payment;
 		}
 	}
 

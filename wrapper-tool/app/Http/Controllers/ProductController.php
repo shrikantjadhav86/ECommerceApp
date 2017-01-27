@@ -808,11 +808,10 @@ class ProductController extends Controller
 	{
 		$request = Request::instance();
 	 	$content = $request->getContent();
-		$json = json_decode($content);
-		
+		$json = json_decode($content);		
 		$pay = $this->interfaceObj->cardPay($json);
-		if($pay == "success"){
-			return response()->json(["message" => $pay, 'status' => true]);
+		if($pay['message'] == "success"){
+			return response()->json(["message" => $pay['message'], "transaction_id" => $pay['transaction_id'], 'status' => true]);
 		}else {
 			return response()->json(["message" => $pay, 'status' => false]);	
 		}	
